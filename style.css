@@ -3,7 +3,10 @@
     padding: 0;
     box-sizing: border-box;
 }
-
+header{
+    display: flex;
+    justify-content: center;
+}
 #player{
     display: flex;
 }
@@ -15,9 +18,25 @@
     padding: 12px;
 } 
 
-form{
+#check-list > div{
     display: flex;
     flex-direction: column;
+    width: 60%;
+
+}
+select, input ,#choose-btn {
+    padding: 8px;
+    margin-bottom: 8px;
+}
+#check-list{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    
+}
+table{
+    margin-top: 8px;
 }
 th{
     border: gray ,solid 0.5px;
