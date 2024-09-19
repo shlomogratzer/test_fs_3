@@ -35,16 +35,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var _this = this;
-var playerModel = {
-    points: 10000,
-    threePercent: 40,
-    twoPercent: 40,
-    position: "PG"
-};
 var BASE_URL = 'https://nbaserver-q21u.onrender.com/api/filter/';
 function getPlayer(player) {
     return __awaiter(this, void 0, void 0, function () {
-        var response, playerList, error_1;
+        var response, playerList, players_1, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -61,12 +55,19 @@ function getPlayer(player) {
                     if (!response.ok) {
                         throw new Error("network error");
                     }
-                    // console.log(BASE_URL);
-                    console.log(response);
                     return [4 /*yield*/, response.json()];
                 case 2:
                     playerList = _a.sent();
-                    console.log("player added", playerList);
+                    players_1 = [];
+                    playerList.forEach(function (player) {
+                        var newPlayer = {
+                            points: player.points,
+                            threePercent: player.threePercent,
+                            twoPercent: player.twoPercent,
+                            position: player.position
+                        };
+                        players_1.push(newPlayer);
+                    });
                     return [2 /*return*/, playerList];
                 case 3:
                     error_1 = _a.sent();
@@ -77,22 +78,78 @@ function getPlayer(player) {
         });
     });
 }
-addEventListener('DOMContentLoaded', function () { return __awaiter(_this, void 0, void 0, function () {
-    var data, error_2;
+var chooseBtn = document.querySelector('#choose-btn');
+chooseBtn.addEventListener('click', function () { return __awaiter(_this, void 0, void 0, function () {
+    var rolePlayer, points, FG, treeP, newPlayers;
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, getPlayer(playerModel)];
-            case 1:
-                data = _a.sent();
-                console.log(data);
-                return [3 /*break*/, 3];
-            case 2:
-                error_2 = _a.sent();
-                console.log(error_2);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
-        }
+        rolePlayer = document.querySelector('#role-player');
+        points = document.querySelector('#points');
+        FG = document.querySelector('#FG');
+        treeP = document.querySelector('#tree');
+        newPlayers = {
+            points: parseInt(points.value),
+            threePercent: parseInt(treeP.value),
+            twoPercent: parseInt(FG.value),
+            position: rolePlayer.value
+        };
+        renderData(newPlayers);
+        return [2 /*return*/];
     });
 }); });
+var renderData = function (nweplayersetings) { return __awaiter(_this, void 0, void 0, function () {
+    var result, tbody;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, getPlayer(nweplayersetings)];
+            case 1:
+                result = _a.sent();
+                tbody = document.querySelector('tbody');
+                tbody.innerHTML = '';
+                result.forEach(function (player) {
+                    var row = document.createElement('tr');
+                    var nameCell = document.createElement('td');
+                    var PositionCell = document.createElement('td');
+                    var PointsCell = document.createElement('td');
+                    var FGCell = document.createElement('td');
+                    var treePCell = document.createElement('td');
+                    var actionsCell = document.createElement('td');
+                    nameCell.innerHTML = "".concat(player.playerName);
+                    PositionCell.innerHTML = "".concat(player.position);
+                    PointsCell.innerHTML = "".concat(player.points);
+                    FGCell.innerHTML = "".concat(player.twoPercent);
+                    treePCell.innerHTML = "".concat(player.threePercent);
+                    var editBtn = document.createElement('button');
+                    editBtn.innerText = 'edit';
+                    editBtn.addEventListener('click', function () {
+                        var playerElement = document.querySelector("#".concat(player.position));
+                        var list = document.createElement('ul');
+                        var name = document.createElement('li');
+                        var points = document.createElement('li');
+                        var position = document.createElement('li');
+                        var FG = document.createElement('li');
+                        var treeP = document.createElement('li');
+                        name.innerHTML = "name: ".concat(player.playerName);
+                        points.innerHTML = "points: ".concat(player.points);
+                        position.innerHTML = "position: ".concat(player.position);
+                        FG.innerHTML = "FG: ".concat(player.twoPercent);
+                        treeP.innerHTML = "treeP: ".concat(player.threePercent);
+                        list.appendChild(name);
+                        list.appendChild(points);
+                        list.appendChild(position);
+                        list.appendChild(FG);
+                        list.appendChild(treeP);
+                        playerElement === null || playerElement === void 0 ? void 0 : playerElement.appendChild(list);
+                    });
+                    actionsCell.appendChild(editBtn);
+                    row.appendChild(nameCell);
+                    row.appendChild(PositionCell);
+                    row.appendChild(PointsCell);
+                    row.appendChild(FGCell);
+                    row.appendChild(treePCell);
+                    row.appendChild(actionsCell);
+                    tbody.appendChild(row);
+                });
+                return [2 /*return*/];
+        }
+    });
+}); };

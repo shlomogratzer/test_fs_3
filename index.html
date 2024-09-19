@@ -10,15 +10,15 @@
 <body>
     <header><h1>My Fantasy Team</h1></header>
     <div id="player">
-        <div id="point-guard"></div>
-        <div id="shooting-guard"></div>
-        <div id="small-forward"></div>
-        <div id="power-forward"></div>
-        <div id="center"></div>
+        <div id="PG"></div>
+        <div id="SG"></div>
+        <div id="SF"></div>
+        <div id="PF"></div>
+        <div id="C"></div>
     </div>
     <div id="check-list">
         <H2>NBA Player Search</H2>
-        <form action="">
+        <div>
             <select name="role-player" id="role-player">
                 <option value="PG">PG</option>
                 <option value="SG">SG</option>
@@ -28,8 +28,9 @@
             </select>
             <input type="range" id="points" name="points" min="0" max="20000">
             <input type="range" id="FG" name="FG" min="0" max="100">
-            <input type="range" id="3P" name="3P" min="0" max="100">
-        </form>
+            <input type="range" id="tree" name="tree" min="0" max="100">
+            <button id="choose-btn">choose</button>
+        </div>
         <table>
             <thead>
                 <tr>
@@ -38,6 +39,7 @@
                     <th>Points</th>
                     <th>FG%</th>
                     <th>3P%</th>
+                    <th>actions</th>
                 </tr>
             </thead>
             <tbody>
